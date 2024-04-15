@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:weatherapp/models/weather_model.dart';
+import 'package:weatherapp/widgets/weather_widget.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -9,6 +11,16 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final List<WeatherData> _data = [
+    WeatherData(time: '1PM', weather: "sunny", degrees: "24°"),
+    WeatherData(time: '2PM', weather: "sunny", degrees: "24°"),
+    WeatherData(time: '3PM', weather: "sunny", degrees: "24°"),
+    WeatherData(time: '4PM', weather: "sunny", degrees: "23°"),
+    WeatherData(time: '5PM', weather: "sunny", degrees: "22°"),
+    WeatherData(time: '6PM', weather: "Cloudy", degrees: "17°"),
+    WeatherData(time: '7PM', weather: "Calm", degrees: "15°"),
+    WeatherData(time: '8PM', weather: "Calm", degrees: "15°")
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +47,7 @@ class _MainPageState extends State<MainPage> {
                   const Text(
                     "London",
                     style: TextStyle(
-                      fontSize: 28,
+                      // fontSize: 28,
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                     ),
@@ -88,7 +100,8 @@ class _MainPageState extends State<MainPage> {
                           height: 32,
                           width: 80,
                           decoration: BoxDecoration(
-                            color: const Color(0xff0d3cb0),
+                            color: const Color.fromARGB(255, 126, 161, 252)
+                                .withOpacity(0.4),
                             borderRadius: BorderRadius.circular(16),
                           ),
                           child: const Center(
@@ -118,6 +131,46 @@ class _MainPageState extends State<MainPage> {
                             ),
                           )),
                     ],
+                  ),
+                  const SizedBox(height: 12),
+                  SizedBox(
+                    height: 100,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: _data.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Weather(
+                                data: _data[index],
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            const Color.fromARGB(255, 126, 161, 250)
+                                .withOpacity(0.6),
+                            const Color.fromARGB(255, 126, 161, 250)
+                                .withOpacity(0.1),
+                          ],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomCenter,
+                        ),
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(24),
+                          topRight: Radius.circular(24),
+                        ),
+                      ),
+                    ),
                   )
                 ],
               ),
